@@ -8,7 +8,8 @@ const selectionMachine = machine({
         inputSelectorClass: "selector-input",
         proposalListClass: "proposal-list",
         selectedTownsClass: 'selected-towns',
-        cities: [],
+        suggestList: [],
+        selectedAreas: [],
     },
     states: {
         'noProposals': {
@@ -27,11 +28,14 @@ const selectionMachine = machine({
                         const selectedTowns = document.getElementsByClassName(
                             context.selectedTownsClass
                         )[0]
+                        const selectedAreas = context.selectedAreas;
                         const BACKSPACE = 8;
                         if (event.keyCode == BACKSPACE
                                 && !context.prevInput
-                                && selectedTowns.children.length){
+                                && selectedAreas.length){
                             selectedTowns.removeChild(selectedTowns.lastChild);
+                            selectedAreas.pop();
+                            setContext({selectedAreas: selectedAreas})
                             setState('noProposals')
                         } else {
                             setContext({prevState: state});
@@ -75,7 +79,7 @@ const selectionMachine = machine({
                         if (towns.length == 0) {
                             setState('noProposals');
                         } else {
-                            setContext({"cities": towns});
+                            setContext({"suggestList": towns});
                             setState('display');
                         }
                     })
@@ -107,7 +111,7 @@ const selectionMachine = machine({
                 while (proposalList.firstChild) {
                     proposalList.removeChild(proposalList.firstChild);
                 }
-                const cities = context.cities;
+                const cities = context.suggestList;
                 for (let proposal of cities) {
                     let proposalItem = document.createElement("li");
                     proposalItem.className = "proposal-element";
@@ -163,6 +167,13 @@ const selectionMachine = machine({
                         const selectedTowns = document.getElementsByClassName(
                             context.selectedTownsClass
                         )[0]
+                        const selectedAreas = context.selectedAreas;
+                        const area = context.highlighted;
+                        if (selectedAreas.includes(area)) {
+                            return;
+                        }
+                        selectedAreas.push(area);
+                        setContext({selectedAreas: selectedAreas});
                         const town = document.createElement("div");
                         town.className = "town";
                         town.appendChild(document.createTextNode(
