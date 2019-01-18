@@ -1,4 +1,5 @@
 const {machine, useContext, useState} = require("./StateMachine");
+const BACKSPACE = 8;
 const selectionMachine = machine({
     id: 'selector',
     initialState: 'noProposals',
@@ -29,7 +30,6 @@ const selectionMachine = machine({
                             context.selectedTownsClass
                         )[0]
                         const selectedAreas = context.selectedAreas;
-                        const BACKSPACE = 8;
                         if (event.keyCode == BACKSPACE
                                 && !context.prevInput
                                 && selectedAreas.length){
@@ -73,7 +73,13 @@ const selectionMachine = machine({
                 let params = {text: curInput};
                 url.search = new URLSearchParams(params)
                 window.fetch(url)
-                    .then(blob => blob.json())
+                    .then(res => {
+                        if (res.ok) {
+                            return res.json();
+                        } else {
+                            throw Error(`Request rejected with status ${res.status}`)
+                        }
+                    })
                     .then(data => {
                         const towns = data.items.map(i => i.text);
                         if (towns.length == 0) {
@@ -189,9 +195,5 @@ const selectionMachine = machine({
             },
         }
     }
-    ,
-    actions: {
-
-    },
 });
 module.exports = {selectionMachine: selectionMachine};
