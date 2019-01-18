@@ -12,7 +12,7 @@ h4 {
 	margin-top: 150px;
 }
 
-#selector {
+.selector {
 	width: 100%;
 	padding-left: 10px;
 	border: 1px solid #ccc;
@@ -36,23 +36,20 @@ h4 {
 	border-radius: 2px;
 }
 
-#selected-towns{
+.selected-towns{
 	display: inline-block;
 }
-#selector-input {
+.selector-input {
 	box-sizing: content-box;
 	border: none;
 	height: 2em;
 	dispay: inline-block;
 	width: 100%;
 	font-size: 18px;
-}
-
-input:focus {
 	outline: none;
 }
 
-#proposal-list {
+.proposal-list {
 	position: absolute;
 	top: 100%;
 	left: 0;
@@ -64,7 +61,7 @@ input:focus {
 	width: 100%;
 }
 
-#highlighted {
+.highlighted {
 	background-color: blue;
 	color: #ffffff;
 }

@@ -5,16 +5,16 @@ const aMachine = machine({
     context: {
         prevInput: "",
         prevState: "",
-        inputSelectorId: "selector-input",
-        proposalListId: "proposal-list",
-        selectedTowns: 'selected-towns',
+        inputSelectorClass: "selector-input",
+        proposalListClass: "proposal-list",
+        selectedTownsClass: 'selected-towns',
         cities: [],
     },
     states: {
         'noProposals': {
             onEntry(event) {
                 const[context, setContext] = useContext();
-                const proposalList = document.getElementById(context.proposalListId);
+                const proposalList = document.getElementsByClassName(context.proposalListClass)[0];
                 while (proposalList.firstChild) {
                     proposalList.removeChild(proposalList.firstChild);
                 }
@@ -24,9 +24,9 @@ const aMachine = machine({
                     service: (event) => {
                         const[state, setState] = useState();
                         const[context, setContext] = useContext();
-                        const selectedTowns = document.getElementById(
-                            context.selectedTowns
-                        )
+                        const selectedTowns = document.getElementsByClassName(
+                            context.selectedTownsClass
+                        )[0]
                         const BACKSPACE = 8;
                         if (event.keyCode == BACKSPACE
                                 && !context.prevInput
@@ -54,7 +54,7 @@ const aMachine = machine({
                 const[state, setState] = useState();
                 const[context, setContext] = useContext();
                 const curInput = document
-                                    .getElementById(context.inputSelectorId)
+                                    .getElementsByClassName(context.inputSelectorClass)[0]
                                     .value;
                 if (curInput.length < 2) {
                     setState('noProposals');
@@ -103,7 +103,7 @@ const aMachine = machine({
             onEntry(event) {
                 const[context, setContext] = useContext();
                 const proposalList = document
-                    .getElementById(context.proposalListId)
+                    .getElementsByClassName(context.proposalListClass)[0]
                 while (proposalList.firstChild) {
                     proposalList.removeChild(proposalList.firstChild);
                 }
@@ -113,10 +113,10 @@ const aMachine = machine({
                     proposalItem.className = "proposal-element";
                     proposalItem.appendChild(document.createTextNode(proposal));
                     proposalList.appendChild(proposalItem);
-                    const firstChild = proposalList.firstChild;
-                    firstChild.id = "highlighted";
-                    setContext({highlighted: firstChild.innerText})
                 }
+                const firstChild = proposalList.firstChild;
+                firstChild.classList.add("highlighted");
+                setContext({highlighted: firstChild.innerText})
             },
             on: {
                 'input': {
@@ -130,14 +130,14 @@ const aMachine = machine({
                 'upDownKeys': {
                     service: (event) => {
                         const[context, setContext] = useContext();
-                        const proposalList = document.getElementById(
-                            context.proposalListId
-                        )
+                        const proposalList = document.getElementsByClassName(
+                            context.proposalListClass
+                        )[0]
                         if (proposalList.children.length < 2) {
                             return;
                         }
                         let neighbor;
-                        const highlightedTown = document.getElementById("highlighted")
+                        const highlightedTown = document.getElementsByClassName("highlighted")[0]
                         const UP = 38;
                         if (event.keyCode === UP) {
                             if (highlightedTown == proposalList.firstChild){
@@ -152,17 +152,17 @@ const aMachine = machine({
                                 neighbor = highlightedTown.nextSibling;
                             }
                         }
-                        highlightedTown.removeAttribute("id");
-                        neighbor.id = "highlighted";
+                        highlightedTown.classList.remove("highlighted");
+                        neighbor.classList.add("highlighted");
                         setContext({'highlighted': neighbor.innerText})
                     }
                 },
                 'enter': {
                     service: (event) => {
                         const[context, setContext] = useContext();
-                        const selectedTowns = document.getElementById(
-                            context.selectedTowns
-                        )
+                        const selectedTowns = document.getElementsByClassName(
+                            context.selectedTownsClass
+                        )[0]
                         const town = document.createElement("div");
                         town.className = "town";
                         town.appendChild(document.createTextNode(
@@ -170,7 +170,7 @@ const aMachine = machine({
                         ))
                         selectedTowns.appendChild(town);
                         const[state, setState] = useState();
-                        document.getElementById(context.inputSelectorId).value = "";
+                        document.getElementsByClassName(context.inputSelectorClass)[0].value = "";
                         setContext({prevInput: ""});
                         setState('noProposals')
                     },

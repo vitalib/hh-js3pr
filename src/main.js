@@ -2,7 +2,8 @@ const {aMachine} = require("./SelectionMachine.js");
 
 const [KEYDOWN, KEYUP, ENTER, KEYLEFT, KEYRIGHT] = [40, 38, 13, 37, 39];
 
-const selectorInput = document.getElementById("selector-input");
+const selectorInput = document.getElementsByClassName("selector-input")[0];
+
 selectorInput.addEventListener("keyup", function(event) {
   if (event.keyCode === ENTER) {
       aMachine.transition('enter');
