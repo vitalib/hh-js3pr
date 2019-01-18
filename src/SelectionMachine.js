@@ -11,7 +11,11 @@ const selectionMachine = machine({
         selectedTownsClass: 'selected-towns',
         suggestList: [],
         selectedAreas: [],
-    },
+        apiURL: "https://api.hh.ru/suggests/areas",
+        apiParameter: "text",
+        apiMapping: "text",
+    }
+    ,
     states: {
         'noProposals': {
             onEntry(event) {
@@ -69,9 +73,9 @@ const selectionMachine = machine({
                     setState(context.prevState);
                     return;
                 }
-                let url = new URL("https://api.hh.ru/suggests/areas")
-                let params = {text: curInput};
-                url.search = new URLSearchParams(params)
+                let url = new URL(context.apiURL);
+                let params = {[context.apiParameter]: curInput};
+                url.search = new URLSearchParams(params);
                 window.fetch(url)
                     .then(res => {
                         if (res.ok) {
@@ -81,7 +85,7 @@ const selectionMachine = machine({
                         }
                     })
                     .then(data => {
-                        const towns = data.items.map(i => i.text);
+                        const towns = data.items.map(i => i[context.apiMapping]);
                         if (towns.length == 0) {
                             setState('noProposals');
                         } else {
