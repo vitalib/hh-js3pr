@@ -1,6 +1,3 @@
-const {NoSuchEventException,
-       NoSuchTargetException,
-       NoSuchActionException} = require("./Exceptions");
 const {MachineStack} = require("./MachineStack");
 
 class StateMachine {
@@ -16,7 +13,7 @@ class StateMachine {
         const machineCurrentState = this.states[this.currentState];
         const handledEvent = machineCurrentState.on[event];
         if (!handledEvent) {
-            throw new NoSuchEventException(`Event ${event} for state` +
+            throw new Error(`Event ${event} for state` +
                 ` ${this.currentState}  doesn't exists`);
         }
         return Promise.resolve(this)
@@ -44,7 +41,7 @@ class StateMachine {
         if (handledEvent.hasOwnProperty("target")) {
             return handledEvent["target"];
         } else {
-            throw new NoSuchTargetException(`Target state for machine` +
+            throw new Error(`Target state for machine` +
              ` ${this.id} is not specified.`)
         }
     }
@@ -55,7 +52,7 @@ class StateMachine {
 
     setState(targetState) {
         if (!this.states.hasOwnProperty(targetState)) {
-            throw new NoSuchTargetException(`Target state "${targetState}"` +
+            throw new Error(`Target state "${targetState}"` +
              ` for machine ${this.id} is incorrect.`)
         }
          this.currentState = targetState;
@@ -66,7 +63,7 @@ class StateMachine {
 
     getActionByItsName(actionName) {
         if (!this.actions.hasOwnProperty(actionName)) {
-            throw new NoSuchActionException(`Action "${action}" is unavailable`)
+            throw new Error(`Action "${action}" is unavailable`)
         }
         return this.actions[actionName];
     }
