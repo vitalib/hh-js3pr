@@ -1,5 +1,5 @@
 const {machine, useContext, useState} = require("./StateMachine");
-const aMachine = machine({
+const selectionMachine = machine({
     id: 'selector',
     initialState: 'noProposals',
     context: {
@@ -183,4 +183,4 @@ const aMachine = machine({
 
     },
 });
-module.exports = {aMachine};
+module.exports = {selectionMachine: selectionMachine};
