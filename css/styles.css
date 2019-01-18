@@ -1,0 +1,70 @@
+body { margin: 0; 
+	font-family: "Helvetica Neue", Helvetica, Arial;
+}
+
+h4 {
+	margin-bottom: 0.66em;
+}
+
+.wrapper {
+	margin: auto;
+	width: 400px;
+	margin-top: 150px;
+}
+
+#selector {
+	width: 100%;
+	padding-left: 10px;
+	border: 1px solid #ccc;
+	color: #333;
+	outline: none;
+	position: relative;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+.town {
+	background-color: aquamarine;
+	display: inline-block;
+	font-size: .9em;
+	margin-left: 2px;
+	vertical-align: center;
+	color: #007eff;
+	background-color: rgba(0, 126, 255, .08);
+	margin-left: 5px;
+	margin-right: 5px;
+	border-radius: 2px;
+}
+
+#selected-towns{
+	display: inline-block;
+}
+#selector-input {
+	box-sizing: content-box;
+	border: none;
+	height: 2em;
+	dispay: inline-block;
+	width: 100%;
+	font-size: 18px;
+}
+
+input:focus {
+	outline: none;
+}
+
+#proposal-list {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	list-style-type: none;
+	height: 200px;
+	overflow: auto;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+
+#highlighted {
+	background-color: blue;
+	color: #ffffff;
+}

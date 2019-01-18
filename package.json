@@ -1,0 +1,22 @@
+{
+  "name": "10_js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "machine_test.js",
+  "dependencies": {
+    "webpack": "^4.28.4"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.2.1"
+  },
+  "scripts": {
+    "build": "webpack -p",
+    "watch": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ls"
+  },
+  "author": "vitalib",
+  "license": "ISC"
+}
